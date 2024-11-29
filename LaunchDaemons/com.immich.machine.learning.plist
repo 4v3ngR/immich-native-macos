@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>Label</key>
-	<string>com.immich.machine-learning</string>
-	<key>KeepAlive</key>
-	<true/>
-	<key>RunAtLoad</key>
-	<true/>
-	<key>UserName</key>
-	<string>immich</string>
-	<key>ProgramArguments</key>
-	<array>
-		<string>/opt/services/immich/app/machine-learning/start.sh</string>
-	</array>
-	<key>RunAtLoad</key>
-	<true/>
-</dict>
+	<dict>
+		<key>Label</key>
+		<string>com.immich.machine-learning</string>
+		<key>RunAtLoad</key>
+		<true/>
+		<key>UserName</key>
+		<string>immich</string>
+		<key>ProgramArguments</key>
+		<array>
+			<string>/opt/services/immich/app/machine-learning/start.sh</string>
+		</array>
+		<key>EnvironmentVariables</key>
+		<dict>
+			<key>PATH</key>
+			<string>/opt/homebrew/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+		</dict>
+		<key>StandardOutPath</key>
+  		<string>/var/log/immich/immich-machine-learning.log</string>
+		<key>StandardErrorPath</key>
+  		<string>/var/log/immich/immich-machine-learning.log</string>
+	</dict>
 </plist>

@@ -1,11 +1,18 @@
 #!/bin/sh
 
-PASSWORD=$(date +%s)
-echo "export PASSWORD=$PASSWORD" >> $(pwd)/config.sh || exit 
+set -eux
 
-. $(pwd)/config.sh || exit
+DB_PASSWORD="$(uuidgen)"
+if ! grep -q "^export DB_PASSWORD=" ./config.sh; then
+    echo "export DB_PASSWORD=\"$DB_PASSWORD\"" >> ./config.sh
+fi
 
-sh $(pwd)/createlog.sh || exit 1
-sh $(pwd)/installdependencies.sh >> /tmp/immich-install.log 2>&1 || exit 1
-sh $(pwd)/configurepostgres.sh $PASSWORD >> /tmp/immich-install.log 2>&1 || exit 1
+# shellcheck disable=SC1091
+. ./config.sh
 
+install_logfile="/tmp/immich-install.log"
+./createlog.sh "$install_logfile"
+{
+    ./installdependencies.sh
+    ./configurepostgres.sh "$DB_PASSWORD"
+} 2>&1 | tee -a "$install_logfile"

@@ -1,25 +1,27 @@
 #!/bin/sh
 
+set -eux
+
 echo "INFO: configure postgresql"
 
-. ./config.sh || exit 1
+# shellcheck disable=SC1091
+. ./config.sh
 
 if [ -z "$TAG" ]; then
   echo "DEBUG: config not working"
   exit 1
 fi
 
-ME=$(whoami)
+ME="$(whoami)"
 
 if [ "$USER" != "$ME" ]; then
-  sudo -u $USER "$0" $* || exit 1
+  sudo -u "$USER" "$0" "$@"
 else
-  PASSWD=$1
-  [ -z "$PASSWD" ] && exit 1
+  PASSWD="$1"
 
-  psql postgres << EOF
+  psql-17 postgres << EOF
 create database immich;
-create user immich with encrypted password '$1';
+create user immich with encrypted password '$PASSWD';
 grant all privileges on database immich to immich;
 ALTER USER immich WITH SUPERUSER;
 EOF
