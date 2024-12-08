@@ -1,14 +1,8 @@
 #!/bin/sh
 
-set -eux
+. $(pwd)/config.sh || exit 1
 
-# shellcheck disable=SC1091
-. ./config.sh
-
-install_logfile="/tmp/immich-install.log"
-{
-    ./createuser.sh
-    ./createpaths.sh
-    ./build.sh
-    ./installdaemons.sh
-} 2>&1 | tee -a "$install_logfile"
+sh $(pwd)/createuser.sh >> /tmp/immich-install.log 2>&1 || exit 1
+sh $(pwd)/createpaths.sh >> /tmp/immich-install.log 2>&1 || exit 1
+sh $(pwd)/build.sh $PASSWORD >> /tmp/immich-install.log 2>&1 || exit 1
+sh $(pwd)/installdaemons.sh >> /tmp/immich-install.log 2>&1 || exit 1

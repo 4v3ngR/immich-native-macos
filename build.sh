@@ -1,8 +1,3 @@
-#!/bin/sh
-
-set -eux
-
-# shellcheck disable=SC1091
 . ./Scripts/config.sh
 
 if [ -z "$TAG" ]; then
@@ -10,14 +5,8 @@ if [ -z "$TAG" ]; then
   exit 1
 fi
 
-mkdir -p "dist/$TAG"
-pkgbuild \
-  --version "$TAG" \
-  --root LaunchDaemons \
-  --identifier com.unofficial.immich.installer \
-  --scripts Scripts \
-  --install-location "/Library/LaunchDaemons" \
-  "dist/$TAG/Unofficial Immich Installer.pkg"
+mkdir -p dist/$TAG
+pkgbuild --version $TAG --root LaunchDaemons --identifier com.unofficial.immich.installer --scripts Scripts --install-location /Library/LaunchDaemons dist/$TAG/Unofficial\ Immich\ Installer.pkg
 
 # need to increase script timeouts
 cd "dist/$TAG"

@@ -1,5 +1,0 @@
-# OS files
-.DS_Store
-
-# Build artifacts
-/dist/

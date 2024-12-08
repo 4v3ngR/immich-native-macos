@@ -1,11 +1,8 @@
 #!/bin/sh
 
-set -eux
-
 echo "INFO: create user"
 
-# shellcheck disable=SC1091
-. ./config.sh
+. ./config.sh || exit 1
 if [ -z "$TAG" ]; then
   echo "DEBUG: config not working"
   exit 1
