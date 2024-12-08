@@ -10,7 +10,7 @@ if [ -z "$TAG" ]; then
   exit 1
 fi
 
-TMP="$(mktemp -d -t immich -p /tmp)"
+TMP="$(mktemp -d -t immich)"
 chmod 755 "$TMP"
 
 if [ "$USER" != "immich" ]; then
