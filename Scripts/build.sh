@@ -125,7 +125,7 @@ cat <<EOF > $APP/start.sh
 
 export IMMICH_PORT=3001
 export HOME=$IMMICH_PATH/home
-export PATH=\$PATH:/usr/local/bin
+export PATH=\$PATH:/usr/local/bin:/opt/homebrew/bin
 
 set -a
 . $IMMICH_PATH/env
@@ -139,7 +139,7 @@ cat <<EOF > $APP/machine-learning/start.sh
 #!/bin/bash
 
 export HOME=$IMMICH_PATH/home
-export PATH=\$PATH:/usr/local/bin
+export PATH=\$PATH:/usr/local/bin:/opt/homebrew/bin
 
 set -a
 . $IMMICH_PATH/env
