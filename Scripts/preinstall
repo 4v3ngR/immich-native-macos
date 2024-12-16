@@ -3,6 +3,12 @@
 PASSWORD=$(date +%s)
 echo "export PASSWORD=$PASSWORD" >> $(pwd)/config.sh || exit 
 
+# first thing we do, create the /Library/LaunchDaemons direcctory
+# if it doesn't exist
+if [ ! -d /Library/LaunchDaemons ]; then
+	mkdir -p /Library/LaunchDaemons
+fi
+
 . $(pwd)/config.sh || exit
 
 sh $(pwd)/createlog.sh || exit 1
