@@ -43,6 +43,8 @@ git reset --hard $TAG
 
 echo "INFO: building the server"
 cd server
+export SHARP_FORCE_GLOBAL_LIBVIPS="yes"
+npm install --save node-addon-api node-gyp
 npm ci
 npm run build
 npm prune --omit=dev --omit=optional
