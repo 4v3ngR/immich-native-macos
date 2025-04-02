@@ -88,18 +88,17 @@ alias pip3=pip3.11
 mkdir -p $APP/machine-learning
 python3 -m venv $APP/machine-learning/venv
 (
-  # Initiate subshell to setup venv
   . $APP/machine-learning/venv/bin/activate
   pip3 install poetry
   cd machine-learning
-  poetry install --no-root --with dev --with cpu || python3 -m pip install onnxruntime
+  poetry install --no-root --extras cpu  || python3 -m pip install onnxruntime
   cd ..
 )
-cp -a machine-learning/ann machine-learning/app $APP/machine-learning/
+cp -a machine-learning/ann machine-learning/immich_ml $APP/machine-learning/
 
 ln -sf $IMMICH_PATH/app/resources $IMMICH_PATH/
 mkdir -p $IMMICH_PATH/cache
-sed -i "" -e "s@\"/cache\"@\"$IMMICH_PATH/cache\"@g" $APP/machine-learning/app/config.py
+sed -i "" -e "s@\"/cache\"@\"$IMMICH_PATH/cache\"@g" $APP/machine-learning/immich_ml/config.py
 npm install sharp
 
 # Install GeoNames
