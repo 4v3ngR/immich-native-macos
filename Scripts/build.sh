@@ -18,7 +18,7 @@ if [[ "$USER" != "immich" ]]; then
   # move to a place were immich has permission
   cwd=$(dirname "$0")
   echo "DEBUG: copying scripts to accessible location"
-  cp "$0" "config.sh" /tmp/
+  cp "$0" "config.sh" "patch.diff" /tmp/
 
   s="/tmp/$(basename "$0")"
   chown immich:immich $s
@@ -39,9 +39,12 @@ echo "INFO: cloning immich repo"
 TMP="/tmp/immich-$(uuidgen)"
 git clone https://github.com/immich-app/immich $TMP
 cd $TMP
+
+# patch migration to not create vectors extension
 git reset --hard $TAG
 
 echo "INFO: building the server"
+patch < /tmp/patch.diff
 cd server
 export SHARP_FORCE_GLOBAL_LIBVIPS="yes"
 npm install --save node-addon-api node-gyp
