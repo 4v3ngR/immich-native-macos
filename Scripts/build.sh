@@ -44,7 +44,7 @@ cd $TMP
 git reset --hard $TAG
 
 echo "INFO: building the server"
-patch < /tmp/patch.diff
+# patch < /tmp/patch.diff
 cd server
 export SHARP_FORCE_GLOBAL_LIBVIPS="yes"
 npm install --save node-addon-api node-gyp
