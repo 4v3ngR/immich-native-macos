@@ -158,7 +158,7 @@ cd $APP/machine-learning
 : "\${MACHINE_LEARNING_WORKER_TIMEOUT:=120}"
 
 exec gunicorn immich_ml.main:app \
-      -k app.config.CustomUvicornWorker \
+      -k immich_ml.config.CustomUvicornWorker \
       -c immich_ml/gunicorn_conf.py  \
       -w "\$MACHINE_LEARNING_WORKERS" \
       -b "\$MACHINE_LEARNING_HOST":"\$MACHINE_LEARNING_PORT" \
