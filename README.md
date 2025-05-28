@@ -8,7 +8,7 @@ If you want to install immich natively on linux, visit [arter97's repo](https://
 
  * This installer will install Immich to `/opt/services/immich`.
 
- * The installer currently is using Immich v1.133.1 It should be noted that due to the fast-evolving nature of Immich, the install script may get broken if you replace the `$TAG` to something more recent.
+ * The installer currently is using Immich v1.134.0 It should be noted that due to the fast-evolving nature of Immich, the install script may get broken if you replace the `$TAG` to something more recent.
 
  * `pgvector` is used instead of `pgvecto.rs` that the official Immich uses to remove an additional Rust build dependency.
 
