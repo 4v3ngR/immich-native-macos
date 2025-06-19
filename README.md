@@ -5,6 +5,8 @@ If you want to install immich natively on linux, visit [arter97's repo](https://
 ### Notes
 
  * This is tested on macOS Monterey and Sonoma (x86).
+   
+ * Full Xcode is needed on M-series Macs   sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
 
  * This installer will install Immich to `/opt/services/immich`.
 
