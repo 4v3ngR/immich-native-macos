@@ -72,7 +72,7 @@ mkdir -p $APP
 cp -a server/node_modules server/dist server/bin $APP/
 cp -a web/build $APP/www
 cp -a server/resources server/package.json server/package-lock.json $APP/
-cp -a server/start*.sh $APP/
+# cp -a server/start*.sh $APP/
 cp -a LICENSE $APP/
 
 cd $APP
@@ -184,7 +184,8 @@ DB_VECTOR_EXTENSION=pgvector
 IMMICH_BUILD_DATA=$IMMICH_PATH/app
 
 # The location where your uploaded files are stored
-UPLOAD_LOCATION=./library
+UPLOAD_LOCATION=$IMMICH_PATH/upload/library
+IMMICH_MEDIA_LOCATION=$IMMICH_PATH/upload
 
 # The Immich version to use. You can pin this to a specific version like "v1.71.0"
 IMMICH_VERSION=release
@@ -196,7 +197,19 @@ IMMICH_MACHINE_LEARNING_URL=http://127.0.0.1:3003
 REDIS_HOSTNAME=127.0.0.1
 EOF
 
+cat << EOF > $APP/updatepaths.sh
+#!/bin/sh
+
+sudo -u immich ./start.sh immich-admin change-media-location
+
+launchctl unload /Library/LaunchDaemons/com.immich.machine.learning.plist
+launchctl unload /Library/LaunchDaemons/com.immich.plist
+launchctl load /Library/LaunchDaemons/com.immich.plist
+launchctl load /Library/LaunchDaemons/com.immich.machine.learning.plist
+EOF
+
 chmod 700 $APP/start.sh
+chmod 700 $APP/updatepaths.sh
 chmod 700 $APP/machine-learning/start.sh
 
 # Cleanup
