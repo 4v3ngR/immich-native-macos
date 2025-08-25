@@ -47,6 +47,7 @@ echo "INFO: building the server"
 # patch < /tmp/patch.diff
 cd server
 export SHARP_FORCE_GLOBAL_LIBVIPS="yes"
+npm install nestjs-kysely@3.0.0
 npm install --save node-addon-api node-gyp
 npm ci
 npm run build
@@ -55,12 +56,14 @@ cd -
 
 echo "INFO: building open-api"
 cd open-api/typescript-sdk
+npm install
 npm ci
 npm run build
 cd -
 
 echo "INFO: building web"
 cd web
+npm install
 npm ci
 npm run build
 cd -
