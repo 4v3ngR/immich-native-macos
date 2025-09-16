@@ -63,6 +63,7 @@ cd -
 
 echo "INFO: building web"
 cd web
+npm install svelte-gestures@5.1.3
 npm install
 npm ci
 npm run build
