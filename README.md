@@ -1,5 +1,13 @@
 # Unofficial Immich Installer
 
+## WARNING!!!!!
+As of v1.143.1, the minimum supported macOS is Sonoma.
+
+As of v1.143.1, the minimum supported macOS is Sonoma.
+
+As of v1.143.1, the minimum supported macOS is Sonoma.
+
+
 If you want to install immich natively on linux, visit [arter97's repo](https://github.com/arter97/immich-native) for instructions and scripts to install immich on linux.
 
 ### Notes
