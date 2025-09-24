@@ -47,7 +47,7 @@ echo "INFO: building the server"
 # patch < /tmp/patch.diff
 cd server
 export SHARP_FORCE_GLOBAL_LIBVIPS="yes"
-npm install nestjs-kysely@3.0.0
+npm install nestjs-kysely@3.0.0 cron@4.3.3
 npm install --save node-addon-api node-gyp
 npm ci
 npm run build
