@@ -12,7 +12,8 @@ else
   [ -z "$(which brew)" ] && echo "Brew is not installed" && exit 1
 
   cd /tmp/
-  brew install cmake postgresql pgvector node redis ffmpeg vips wget npm python@3.11
+  DEPS="cmake postgresql node pgvector redis ffmpeg vips wget npm python@3.11"
+  brew install $DEPS
   brew services restart postgresql
   brew services restart redis
   cd -
