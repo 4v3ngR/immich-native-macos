@@ -6,14 +6,14 @@ if [ -z "$TAG" ]; then
 fi
 
 mkdir -p dist/$TAG
-pkgbuild --version $TAG --root LaunchDaemons --identifier com.unofficial.immich.installer --scripts Scripts --install-location /Library/LaunchDaemons dist/$TAG/Unofficial\ Immich\ Installer.pkg
+pkgbuild --version $TAG --root LaunchDaemons --identifier com.unofficial.immich.installer --scripts Scripts --install-location /Library/LaunchDaemons dist/$TAG/Unofficial\ Immich\ Installer-$TAG.pkg
 
 # need to increase script timeouts
 cd "dist/$TAG"
-pkgutil --expand Unofficial\ Immich\ Installer.pkg contents
+pkgutil --expand Unofficial\ Immich\ Installer-$TAG.pkg contents
 sed -i ".bak" -e 's/600/3600/g' contents/PackageInfo
 rm -f contents/Bom contents/*.bak
 mkbom contents contents/Bom
-pkgutil --flatten contents Unofficial\ Immich\ Installer.pkg
+pkgutil --flatten contents Unofficial\ Immich\ Installer-$TAG.pkg
 rm -rf contents
 cd -
