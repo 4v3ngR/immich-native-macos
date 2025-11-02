@@ -10,7 +10,7 @@ fi
 PASSWD="$1"
 
 if [[ "$USER" != "immich" ]]; then
-  echo "DEBUG: going to switch to immich user"
+  echo "DEBUG: no longer going to switch to immich user"
   rm -rf "$IMMICH_PATH/home" 2> /dev/null
   mkdir -p "$IMMICH_PATH/home"
   chown immich:immich "$IMMICH_PATH/home"
@@ -18,12 +18,13 @@ if [[ "$USER" != "immich" ]]; then
   # move to a place were immich has permission
   cwd=$(dirname "$0")
   echo "DEBUG: copying scripts to accessible location"
-  cp "$0" "config.sh" "patch.diff" /tmp/
+  cp "$0" "config.sh" "patch.diff" /tmp/ 2> /dev/null
 
   s="/tmp/$(basename "$0")"
   chown immich:immich $s
-  sudo -u immich "$s" $* 2>&1 || exit 1
-  exit
+  # sudo -u immich "$s" $* 2>&1 || exit 1
+  # exit
+  echo "DEBUG: !!!!!!!!!!!!!!!!!! running build as root"
 fi
 
 echo "INFO: building immich"
@@ -44,10 +45,14 @@ cd $TMP
 git reset --hard $TAG
 
 echo "INFO: building the server"
-# patch < /tmp/patch.diff
+[ -f "/tmp/patch.diff" ] && {
+	echo "INFO: found patch.diff, applying"
+	patch < /tmp/patch.diff
+}
+
 cd server
 export SHARP_FORCE_GLOBAL_LIBVIPS="yes"
-npm install nestjs-kysely@3.0.0 cron@4.3.3
+# npm install nestjs-kysely@3.0.0 cron@4.3.3
 npm install --save node-addon-api node-gyp
 npm ci
 npm run build
@@ -87,17 +92,23 @@ npm install --os=darwin --cpu=x64 sharp
 cd -
 
 echo "INFO building machine learning"
-# force use of python3.11
-alias python3=python3.11
-alias pip3=pip3.11
+# force use of python3.12
+alias python3=python3.12
+alias pip3=pip3.12
 
 mkdir -p $APP/machine-learning
-python3 -m venv $APP/machine-learning/venv
+rm -rf $APP/machine-learning/venv
+echo "DEBUG running venv"
+python3 -m venv $APP/machine-learning/venv || echo "WARN venv failed"
 (
+  echo "DEBUG activating venv"
   . $APP/machine-learning/venv/bin/activate
+  echo "DEBUG installing poetry"
   pip3 install poetry
   cd machine-learning
+  echo "DEBUG running poetry install"
   poetry install --no-root --extras cpu  || python3 -m pip install onnxruntime
+  echo "DEBUG done"
   cd ..
 )
 cp -a machine-learning/ann machine-learning/immich_ml $APP/machine-learning/
@@ -215,5 +226,9 @@ chmod 700 $APP/start.sh
 chmod 700 $APP/updatepaths.sh
 chmod 700 $APP/machine-learning/start.sh
 
+echo "DEBUG: changin ownership"
+chown -R immich:immich "$APP"
+
 # Cleanup
+echo "DEBUG: cleaning up"
 rm -rf $TMP /tmp/$(basename "$0")
