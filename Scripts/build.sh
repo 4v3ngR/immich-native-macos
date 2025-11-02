@@ -44,6 +44,12 @@ cd $TMP
 # patch migration to not create vectors extension
 git reset --hard $TAG
 
+[ -f "/tmp/patch.diff" ] && {
+  echo "INFO: found patch.diff, applying"
+  patch < /tmp/patch.diff
+}
+
+echo "INFO: building the server"
 cd server
 export SHARP_FORCE_GLOBAL_LIBVIPS="yes"
 # npm install nestjs-kysely@3.0.0 cron@4.3.3
