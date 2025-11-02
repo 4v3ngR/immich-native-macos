@@ -233,4 +233,4 @@ chown -R immich:immich "$APP"
 
 # Cleanup
 echo "DEBUG: cleaning up"
-rm -rf $TMP /tmp/$(basename "$0")
+rm -rf $TMP /tmp/$(basename "$0") /tmp/config.sh /tmp/patch.diff
