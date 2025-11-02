@@ -44,12 +44,6 @@ cd $TMP
 # patch migration to not create vectors extension
 git reset --hard $TAG
 
-echo "INFO: building the server"
-[ -f "/tmp/patch.diff" ] && {
-	echo "INFO: found patch.diff, applying"
-	patch < /tmp/patch.diff
-}
-
 cd server
 export SHARP_FORCE_GLOBAL_LIBVIPS="yes"
 # npm install nestjs-kysely@3.0.0 cron@4.3.3
@@ -110,6 +104,8 @@ python3 -m venv $APP/machine-learning/venv || echo "WARN venv failed"
   poetry install --no-root --extras cpu  || python3 -m pip install onnxruntime
   echo "DEBUG done"
   cd ..
+  pip3 install rapidocr==3.1.0
+  pip3 install onnxruntime==1.20.1 
 )
 cp -a machine-learning/ann machine-learning/immich_ml $APP/machine-learning/
 
