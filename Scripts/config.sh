@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export TAG="v2.2.3"
+export TAG="v2.3.1"
 export IMMICH_PATH="/opt/services/immich"
 export APP="$IMMICH_PATH/app"
 export BASEDIR="$(dirname "$0")"

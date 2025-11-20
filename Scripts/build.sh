@@ -74,6 +74,16 @@ npm ci
 npm run build
 cd -
 
+if [ -d "plugins" ]; then
+	echo "INFO: building plugins"
+	cd plugins
+	npm install pnpm sharp@0.34.4
+	npm install
+	npm ci
+	npm run build
+	cd -
+fi
+
 echo "INFO: copying to destination directory"
 rm -rf $APP
 mkdir -p $APP
@@ -83,6 +93,10 @@ cp -a web/build $APP/www
 cp -a server/resources server/package.json server/package-lock.json $APP/
 # cp -a server/start*.sh $APP/
 cp -a LICENSE $APP/
+
+if [ -d "plugins" ]; then
+	cp -a plugins $APP/corePlugin
+fi
 
 cd $APP
 # v1.108.0 and above now loads geodata using IMMICH_BUILD_DATA env var, which appears to also
@@ -119,7 +133,7 @@ cp -a machine-learning/ann machine-learning/immich_ml $APP/machine-learning/
 ln -sf $IMMICH_PATH/app/resources $IMMICH_PATH/
 mkdir -p $IMMICH_PATH/cache
 sed -i "" -e "s@\"/cache\"@\"$IMMICH_PATH/cache\"@g" $APP/machine-learning/immich_ml/config.py
-npm install sharp
+npm install sharp@0.34.4
 
 # Install GeoNames
 cd $IMMICH_PATH/app/resources
@@ -173,6 +187,7 @@ cd $APP/machine-learning
 : "\${MACHINE_LEARNING_PORT:=3003}"
 : "\${MACHINE_LEARNING_WORKERS:=1}"
 : "\${MACHINE_LEARNING_WORKER_TIMEOUT:=120}"
+: "\${export OBJC_DISABLE_INITIALIZE_FORK_SAFETY"=YES}"
 
 exec gunicorn immich_ml.main:app \
       -k immich_ml.config.CustomUvicornWorker \
