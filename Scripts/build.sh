@@ -68,6 +68,7 @@ cd -
 
 echo "INFO: building web"
 cd web
+npm install sharp@0.34.4
 npm install
 npm ci
 npm run build
