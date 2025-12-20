@@ -30,6 +30,7 @@ fi
 echo "INFO: building immich"
 
 export HOME="$IMMICH_PATH/home"
+export NODE_OPTIONS=--max-old-space-size=8192
 
 set -euo pipefail
 umask 077
