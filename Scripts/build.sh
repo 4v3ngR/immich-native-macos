@@ -78,7 +78,7 @@ cd -
 if [ -d "plugins" ]; then
 	echo "INFO: building plugins"
 	cd plugins
-	npm install pnpm sharp@0.34.4
+	npm install pnpm sharp@0.34.4 @extism/extism
 	npm install
 	npm ci
 	npm run build
