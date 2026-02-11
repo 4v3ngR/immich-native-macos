@@ -53,9 +53,10 @@ git reset --hard $TAG
 echo "INFO: building the server"
 cd server
 export SHARP_FORCE_GLOBAL_LIBVIPS="yes"
-# npm install nestjs-kysely@3.0.0 cron@4.3.3
 npm install --save node-addon-api node-gyp
-npm ci
+# force install of cron@4.4.0
+npm uninstall cron
+npm install cron@4.4.0
 npm run build
 npm prune --omit=dev --omit=optional
 cd -
